@@ -1,0 +1,74 @@
+模块的引入
+
+
+
+2 url api
+
+
+macdeMacBook-Pro:school zjh$ node     输入node 进入node环境
+
+输入url  查看url 的方法
+> url
+{ parse: [Function: urlParse],
+  resolve: [Function: urlResolve],
+  resolveObject: [Function: urlResolveObject],
+  format: [Function: urlFormat],
+  Url: [Function: Url] }
+
+http://www.imooc.com/learn/348
+调用url.parse 方法 将url字符串解析为对象
+url.parse('http://www.imooc.com:8080/course/list?from=scott&course=node#floor1')
+Url {
+  protocol: 'http:',                           protocol 底层实现的协议
+  slashes: true,                               slashes  是否有协议的双斜线(http://)
+  auth: null,
+  host: 'www.imooc.com:8080',                  host     http服务器的ip地址 或者域名
+  port: '8080',                                port     端口 默认8080
+  hostname: 'www.imooc.com',                   hostname 主机名
+  hash: '#floor1',                             hash     哈西值，通常对应页面锚点
+  search: '?from=scott&course=node',           search   查询字符串参数
+  query: 'from=scott&course=node',             query    发送给服务器的参数
+  pathname: '/learn/348',                      pathname 资源路径名
+  pathname: '/course/list',                    pathname 资源路径名
+  path: '/course/list?from=scott&course=node', path  资源路径
+  href: 'http://www.imooc.com:8080/course/list?from=scott&course=node#floor1' }
+>
+href 完整的超链接，协议主机名都会小写化
+
+第二个参数默认为false  为true时 query 会被解析成一个对象
+url.parse('http://www.imooc.com:8080/course/list?from=scott&course=node#floor1'，true)
+
+为false时   query: 'from=scott&course=node',
+为true时    query: { from: 'scott', course: 'node' },
+
+第三个参数默认为false    为true时，可以在没加协议http 是解析出URL
+> url.parse('//www.imooc.com:8080/course/list?from=scott&course=node#floor1', true, true)
+
+
+
+href: null 时url地址中没有体现
+通过以上值的组合就能定位互联网的一个资源
+
+
+通过对象装换URL字符创
+url.format(obj)
+> url.format({
+...   protocol: 'http:',
+...   slashes: true,
+...   auth: null,
+...   host: 'www.imooc.com:8080',
+...   port: '8080',
+...   hostname: 'www.imooc.com',
+...   hash: '#floor1',
+...   search: '?from=scott&course=node',
+...   query: 'from=scott&course=node',
+...   pathname: '/course/list',
+...   path: '/course/list?from=scott&course=node',
+...   href: 'http://www.imooc.com:8080/course/list?from=scott&course=node#floor1' } )
+'http://www.imooc.com:8080/course/list?from=scott&course=node#floor1'
+
+
+第一个参数 protocol + hostname
+第二个参数  path 资源路径
+> url.resolve('http//imooc.com/', 'course/list')
+'http//imooc.com/course/list'
